@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Package Selection</title>
+    <style>
+        /* Basic styling for the form */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            color: #555;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            padding: 12px;
+            width: 100%;
+            background-color: #25D366; /* WhatsApp Green */
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #128C7E;
+        }
+        .note {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Select Your Package</h2>
+        <form id="packageForm">
+            <label for="package">Choose a Package:</label>
+            <select id="package" name="package" required>
+                <option value="">--Select Package--</option>
+                <option value="Basic">Basic Package</option>
+                <option value="Standard">Standard Package</option>
+                <option value="Premium">Premium Package</option>
+            </select>
+
+            <label for="mobile">Enter Your Mobile Number:</label>
+            <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10,15}" placeholder="e.g., 1234567890" required>
+
+            <button type="submit">Submit</button>
+        </form>
+        <p class="note">By submitting, you will be redirected to WhatsApp.</p>
+    </div>
+
+    <script>
+        document.getElementById('packageForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            const packageSelected = document.getElementById('package').value;
+            const mobileNumber = document.getElementById('mobile').value.trim();
+
+            if (!packageSelected) {
+                alert('Please select a package.');
+                return;
+            }
+
+            // Validate mobile number (simple validation)
+            const mobilePattern = /^[0-9]{10,15}$/;
+            if (!mobilePattern.test(mobileNumber)) {
+                alert('Please enter a valid mobile number (10-15 digits).');
+                return;
+            }
+
+            // Construct the message
+            const message = `Package Selected: ${encodeURIComponent(packageSelected)}%0AMobile Number: ${encodeURIComponent(mobileNumber)}`;
+
+            // Replace 'YOUR_WHATSAPP_NUMBER' with your actual WhatsApp number in international format
+            const whatsappNumber = '+201023339149'; // e.g., '12345678901'
+
+            // Construct the WhatsApp URL
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+            // Open WhatsApp in a new tab/window
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+</body>
+</html>
