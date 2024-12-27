@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>اختيار الباقة</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Added Meta Viewport -->
     <style>
         /* Basic styling for the form */
         body {
@@ -17,23 +18,28 @@
             background-image: url("gold.jpg");
             background-repeat: no-repeat;
             background-size: cover;
+            background-position: center; /* Ensures the image is centered */
         }
         .container {
             background-color: #fff;
             padding: 30px 40px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            width: 90%; /* Changed from fixed width to percentage */
+            max-width: 400px; /* Ensures it doesn't exceed 400px */
+            box-sizing: border-box; /* Includes padding in width */
         }
         h2 {
             text-align: center;
             margin-bottom: 25px;
             color: #333;
+            font-size: 2em; /* Ensures readability */
         }
         label {
             display: block;
             margin-top: 15px;
             color: #555;
+            font-size: 1em;
         }
         select, input {
             width: 100%;
@@ -42,6 +48,7 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
+            font-size: 1em;
         }
         button {
             margin-top: 20px;
@@ -53,6 +60,7 @@
             font-size: 16px;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s ease; /* Smooth transition */
         }
         button:hover {
             background-color: #128C7E;
@@ -62,6 +70,45 @@
             font-size: 12px;
             color: #888;
             text-align: center;
+        }
+
+        /* Media Queries for Devices with a Width of 768px or Less */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px; /* Adds padding to prevent content from touching screen edges */
+            }
+
+            .container {
+                padding: 20px 25px; /* Reduces padding for smaller screens */
+            }
+
+            h2 {
+                font-size: 1.5em; /* Adjusts the heading size */
+            }
+
+            label, select, input, button {
+                font-size: 1em; /* Ensures text is readable on smaller devices */
+            }
+
+            .note {
+                font-size: 0.9em; /* Slightly smaller note text */
+            }
+        }
+
+        /* Media Queries for Devices with a Width of 480px or Less */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px 20px; /* Further reduces padding */
+            }
+
+            h2 {
+                font-size: 1.2em; /* Further adjusts heading size */
+            }
+
+            button {
+                padding: 10px; /* Reduces button padding */
+                font-size: 0.9em; /* Adjusts button text size */
+            }
         }
     </style>
 </head>
@@ -82,7 +129,15 @@
             </select>
 
             <label for="mobile">أدخل رقم الموبايل الخاص بك:</label>
-            <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10,15}" placeholder="مثال: 01234567890" required>
+            <input 
+                type="tel" 
+                id="mobile" 
+                name="mobile" 
+                pattern="[0-9]{10,15}" 
+                placeholder="مثال: 01234567890" 
+                required 
+                aria-describedby="mobileHelp">
+            <p id="mobileHelp" class="note">يرجى إدخال رقم موبايل صالح (10-15 رقم).</p>
 
             <button type="submit">إرسال</button>
         </form>
@@ -125,7 +180,7 @@
             const message = `باقتك المختارة: ${encodeURIComponent(selectedPackage)}%0Aرقم الموبايل: ${encodeURIComponent(mobileNumber)}`;
 
             // Replace 'YOUR_WHATSAPP_NUMBER' with your actual WhatsApp number in international format
-            const whatsappNumber = '201200825653'; // 
+            const whatsappNumber = '201200825653'; // Ensure this is in the correct format
 
             // Construct the WhatsApp URL
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
