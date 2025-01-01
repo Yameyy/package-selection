@@ -149,40 +149,44 @@
     <script defer>
         const form = document.getElementById('packageForm');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const packageSelected = document.getElementById('package').value;
-            const mobileNumber = document.getElementById('mobile').value.trim();
-            const mobilePattern = /^[0-9]{10,15}$/;
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const packageSelected = document.getElementById('package').value;
+    const mobileNumber = document.getElementById('mobile').value.trim();
+    const mobilePattern = /^[0-9]{10,15}$/;
 
-            let errorMessage = '';
+    let errorMessage = '';
 
-            if (!packageSelected) {
-                errorMessage = 'يرجى اختيار باقة.';
-            } else if (!mobilePattern.test(mobileNumber)) {
-                errorMessage = 'يرجى إدخال رقم موبايل صالح.';
-            }
+    if (!packageSelected) {
+        errorMessage = 'يرجى اختيار باقة.';
+    } else if (!mobilePattern.test(mobileNumber)) {
+        errorMessage = 'يرجى إدخال رقم موبايل صالح.';
+    }
 
-            const errorElement = document.querySelector('.note');
-            if (errorMessage) {
-                errorElement.innerText = errorMessage;
-                errorElement.classList.add('error');
-                return;
-            } else {
-                errorElement.innerText = 'بإرسال النموذج، سيتم تحويلك إلى واتساب.';
-                errorElement.classList.remove('error');
-            }
+    const errorElement = document.querySelector('.note');
+    if (errorMessage) {
+        errorElement.innerText = errorMessage;
+        errorElement.classList.add('error');
+        return;
+    } else {
+        errorElement.innerText = 'بإرسال النموذج، سيتم تحويلك إلى واتساب.';
+        errorElement.classList.remove('error');
+    }
 
-            const packageDetails = {
-                "20GB_1000": "20 جيجا إنترنت + 1000 دقيقة",
-                "30GB_1500": "30 جيجا إنترنت + 1500 دقيقة",
-            };
+    const packageDetails = {
+        "20GB_1000": "20 جيجا إنترنت + 1000 دقيقة/رسالة - 220 جنيه",
+        "30GB_1500": "30 جيجا إنترنت + 1500 دقيقة/رسالة - 280 جنيه",
+        "35GB_1500": "35 جيجا إنترنت + 1500 دقيقة/رسالة - 335 جنيه",
+        "40GB_1500": "40 جيجا إنترنت + 1500 دقيقة/رسالة - 360 جنيه",
+        "50GB_2000": "50 جيجا إنترنت + 2000 دقيقة/رسالة - 430 جنيه",
+        "60GB_2000": "60 جيجا إنترنت + 2000 دقيقة/رسالة - 500 جنيه"
+    };
 
-            const selectedPackage = packageDetails[packageSelected] || "غير محددة";
-            const message = `باقتك: ${selectedPackage}%0Aرقم: ${mobileNumber}`;
-            const whatsappURL = `https://wa.me/201200825653?text=${message}`;
-            window.open(whatsappURL, '_blank');
-        });
+    const selectedPackage = packageDetails[packageSelected] || "باقة غير محددة";
+    const message = `باقتك المختارة: ${encodeURIComponent(selectedPackage)}%0Aرقم الموبايل: ${encodeURIComponent(mobileNumber)}`;
+    const whatsappURL = `https://wa.me/201200825653?text=${message}`;
+    window.open(whatsappURL, '_blank');
+});
     </script>
 </body>
 </html>
